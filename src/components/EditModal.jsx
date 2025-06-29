@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
-import { backendUrl } from '../App';
+import axiosInstance from '../utils/axiosConfig';
 
 const EditModal = ({ isOpen, onClose, product, token, onUpdate }) => {
   const [formData, setFormData] = useState({
@@ -54,10 +53,9 @@ const EditModal = ({ isOpen, onClose, product, token, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${backendUrl}/api/product/update`,
-        formData,
-        { headers: { token } }
+      const response = await axiosInstance.post(
+        '/api/product/update',
+        formData
       );
 
       if (response.data.success) {
